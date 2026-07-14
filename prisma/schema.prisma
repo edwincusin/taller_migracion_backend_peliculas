@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model peliculas {
+  id        Int     @id @default(autoincrement())
+  foto      Bytes?
+  genero    String  @db.VarChar(255)
+  mime_type String? @db.VarChar(255)
+  sinopis   String
+  titulo    String  @db.VarChar(255)
+}
+
+model usuarios {
+  id        Int    @id @default(autoincrement())
+  password  String @db.VarChar(255)
+  user_name String @unique(map: "ukr9ksbmgwvokav9vgydstfdmws") @db.VarChar(255)
+  rol       String @db.VarChar(255)
+}
+
+model vehiculos {
+  id        Int     @id @default(autoincrement())
+  foto      Bytes?
+  marca     String  @db.VarChar(255)
+  mime_type String? @db.VarChar(255)
+  modelo    String  @db.VarChar(255)
+}
