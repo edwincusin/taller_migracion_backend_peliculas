@@ -76,7 +76,6 @@ export const modificarMovieId = async (req: Request, res: Response) => {
     const { genero, sinopis, titulo } = req.body; //nuevos datos
     const archivo = req.file;
 
-
     const pelicula = await prisma.peliculas.findUnique({
       where: {
         id: Number(id),
@@ -109,7 +108,7 @@ export const modificarMovieId = async (req: Request, res: Response) => {
         sinopis,
         titulo,
         mime_type: mimeTypeFinal,
-        foto: bufferFinal
+        foto: bufferFinal,
       },
     });
     res.status(200).json({ Mensaje: "Pelicula modificada con exito" });
@@ -119,3 +118,28 @@ export const modificarMovieId = async (req: Request, res: Response) => {
   }
 };
 
+//ENDPOINT CREAR PELICULA
+export const crearMovie = async (req: Request, res: Response) => {
+  try {
+    const { genero, sinopis, titulo } = req.body; //nuevos datos
+    const archivo = req.file;
+
+    if (!archivo) {
+      return res.status(400).json({ error: "debe seleccionar una imagen" });
+    }
+
+    const nuevaMovie = await prisma.peliculas.create({
+      data: {
+        genero,
+        sinopis,
+        titulo,
+        mime_type: archivo.mimetype,
+        foto: archivo.buffer,
+      },
+    });
+    res.status(201).json({ Mensaje: "Pelicula registrada con exito" });
+  } catch (error) {
+    console.log({ error: error, mensaje: "error al crear  peliculas" });
+    res.status(500).json({ Mensaje: "error al crear  peliculas " });
+  }
+};
