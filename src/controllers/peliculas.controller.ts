@@ -121,7 +121,7 @@ export const modificarMovieId = async (req: Request, res: Response) => {
 //ENDPOINT CREAR PELICULA
 export const crearMovie = async (req: Request, res: Response) => {
   try {
-    const { genero, sinopis, titulo } = req.body; //nuevos datos
+    const { genero, sinopsis, titulo } = req.body; //nuevos datos
     const archivo = req.file;
 
     if (!archivo) {
@@ -131,7 +131,7 @@ export const crearMovie = async (req: Request, res: Response) => {
     const nuevaMovie = await prisma.peliculas.create({
       data: {
         genero,
-        sinopis,
+        sinopis:sinopsis,
         titulo,
         mime_type: archivo.mimetype,
         foto: archivo.buffer,
