@@ -25,8 +25,32 @@ const upload=multer({storage:multer.memoryStorage()});
  */
 routerPeliculas.get("/peliculas",validarAuth,listarMovies);
 
+
+/**
+ * @swagger
+ * /auth/peliculas/{id}:
+ *  delete:
+ *      summary: Elimina una pelicular por su ID, pasando como PARAMS
+ *      tags: [peliculas]
+ *      security: 
+ *          - bearerAuth: []
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema: 
+ *              type: integer
+ *            description: ID de la película que se desea eliminar
+ *      responses: 
+ *          200:
+ *              description: Pelicula eliminada correctamente.
+ *          500: 
+ *              description: Error al eliminar pelicula.
+ */
+routerPeliculas.delete("/peliculas/:id",validarAuth,deleteMovie);
+
 routerPeliculas.get("/peliculas/:id/foto",validarAuth,obtenerFotoId);
 routerPeliculas.post("/peliculas",validarAuth,upload.single("file"),crearMovie);
 routerPeliculas.put("/peliculas/:id",validarAuth,upload.single("file"),modificarMovieId);
-routerPeliculas.delete("/peliculas/:id",validarAuth,deleteMovie);
+
 
