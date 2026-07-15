@@ -90,8 +90,40 @@ routerPeliculas.delete("/peliculas/:id",validarAuth,deleteMovie);
  */
 routerPeliculas.put("/peliculas/:id",validarAuth,upload.single("file"),modificarMovieId);
 
+/**
+ * @swagger
+ * /auth/peliculas:
+ *   post:
+ *     summary: Crear o guarda nuevo registro de pelicula
+ *     tags: [peliculas]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               titulo:
+ *                 type: string
+ *               genero:
+ *                 type: string
+ *               sinopsis:
+ *                 type: string
+ *               file:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       201:
+ *         description: Creacion exitosa.
+ *       400:
+ *         description: El campo de la imagen debe completarse, es obligatorio.
+ *       500:
+ *         description: Error al guardar nueva pelicula. 
+ */
+routerPeliculas.post("/peliculas",validarAuth,upload.single("file"),crearMovie);
 
 routerPeliculas.get("/peliculas/:id/foto",validarAuth,obtenerFotoId);
-routerPeliculas.post("/peliculas",validarAuth,upload.single("file"),crearMovie);
 
 
