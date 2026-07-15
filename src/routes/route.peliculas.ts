@@ -49,8 +49,49 @@ routerPeliculas.get("/peliculas",validarAuth,listarMovies);
  */
 routerPeliculas.delete("/peliculas/:id",validarAuth,deleteMovie);
 
+/**
+ * @swagger
+ * /auth/peliculas/{id}:
+ *  put:
+ *      summary: Edita una pelicular por su ID, pasando como PARAMS en el path
+ *      tags: [peliculas]
+ *      security: 
+ *          - bearerAuth: [] 
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema: 
+ *              type: integer
+ *            description: ID de la película que se desea modificar
+ *      requestBody:
+ *          required: true
+ *          content: 
+ *              multipart/form-data:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          titulo:
+ *                              type: string
+ *                          genero:
+ *                              type: string
+ *                          sinopis:
+ *                              type: string
+ *                          file:
+ *                              type: string
+ *                              format: binary
+ *      responses:
+ *          200:    
+ *              description: Modificacion exitosa.
+ *          404: 
+ *              description: No existe pelicula con tal ID para modificar.
+ *          500: 
+ *              description: Error al modificar pelicula.
+ */
+routerPeliculas.put("/peliculas/:id",validarAuth,upload.single("file"),modificarMovieId);
+
+
 routerPeliculas.get("/peliculas/:id/foto",validarAuth,obtenerFotoId);
 routerPeliculas.post("/peliculas",validarAuth,upload.single("file"),crearMovie);
-routerPeliculas.put("/peliculas/:id",validarAuth,upload.single("file"),modificarMovieId);
 
 
