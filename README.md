@@ -89,3 +89,65 @@ una Card.
 
 ● Link del Repositorio
 ● Capturas de Pantalla Enviadas al grupo de WhatsApp:
+
+#PARTE 2 
+
+TALLER: DOCUMENTACIÓN DE APIS
+CON SWAGGER
+Objetivo: Integrar una página de documentación interactiva en el servidor backend utilizando el
+estándar OpenAPI (Swagger).
+💡 Aclaración Importante: Para no generar confusiones y mantener la secuencia del curso,
+debes realizar este taller sobre tu mismo proyecto del reto anterior (el backend de Node.js
+de tu "Tema Libre" que acabas de migrar desde Java).
+
+🛠️ PASO A PASO DEL TALLER
+Paso 1: Instalación y Configuración Base
+1. En la terminal de tu proyecto backend migrado, instala las dependencias necesarias de
+Swagger:
+2. bash
+3. npm install swagger-ui-express swagger-jsdoc
+4. npm install -D @types/swagger-ui-express @types/swagger-jsdoc
+5. Crea un archivo llamado src/swagger.ts y configura la especificación. Ojo: Como tus
+rutas están protegidas con el middleware de autenticación, es fundamental que
+configures los components.securitySchemes en tu objeto de opciones para indicarle a
+Swagger que usas un bearerAuth (Tokens JWT).
+6. En tu src/index.ts, importa la función de inicialización e inyéctala pasándole tu
+variable app para que la página esté disponible en la ruta
+http://localhost:3000/api-docs.
+Paso 2: Documentar las Rutas del Tema Libre
+En tu archivo de rutas (por ejemplo, src/routes/items.ts), debes agregar los bloques de
+comentarios mágicos (/** @swagger ... */) justo encima de cada uno de tus 4 métodos
+principales:
+● GET: Para obtener la lista de tus elementos.
+● POST (Crear con Multer): Debes documentar el requestBody indicando que usas
+multipart/form-data e indicando que el formato del campo de la foto es binary.
+● PUT (Actualizar): Recuerda declarar en parameters: que esta ruta recibe un id en el
+path.
+● DELETE (Eliminar): También requiere el parámetro id en el path.
+🤖 Uso de IA (Opcional pero recomendado): Si prefieres no escribir el formato YAML a mano
+por temor a errores de indentación, puedes usar ChatGPT proporcionándole un ejemplo de tu
+código y pidiéndole que te genere los bloques de comentario para Swagger basándose en tus
+controladores.
+
+Paso 3: Probar la Autenticación desde la Web
+1. Levanta tu servidor con npm run dev.
+2. Ingresa a http://localhost:3000/api-docs.
+3. Haz clic en el candado superior (Authorize) y pega un Token JWT válido que hayas
+generado haciendo login.
+4. Despliega cualquiera de tus rutas, haz clic en "Try it out" y realiza una petición a tu
+base de datos directamente desde la web.
+
+📸 ENTREGABLES REQUERIDOS (2 CAPTURAS DE
+PANTALLA)
+Deberás enviar al grupo de WhatsApp las siguientes evidencias de tu progreso (a pantalla
+completa, donde se vea la barra del navegador):
+● Captura 1 (Interfaz de Swagger): Vista completa de la página /api-docs cargada en tu
+navegador, mostrando el título de tu API (ej: API de Películas) y el listado de tus 4 rutas
+desplegadas con sus respectivos colores (GET, POST, PUT, DELETE).
+● Captura 2 (Prueba Exitosa con Token): Captura dentro de Swagger donde se aprecie
+que ejecutaste una ruta protegida (ej: el GET o el POST) y el servidor te respondió
+exitosamente con un código 200 o 201, demostrando que configuraste correctamente el
+Token JWT en el candado.
+🚀 Entrega Final
+● Link del Repositorio de tu Backend actualizado con los comentarios de Swagger.
+● Capturas de Pantalla enviadas al grupo de WhatsApp.
