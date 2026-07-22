@@ -100,7 +100,7 @@ export const modificarMovieId = async (req: Request, res: Response) => {
       bufferFinal = archivo.buffer;
       mimeTypeFinal = archivo.mimetype;
     }
-
+    //trasformar de arraybufferlike a un array buffer (normal)
     const nuevaMovie = await prisma.peliculas.update({
       where: { id: Number(id) },
       data: {
@@ -108,7 +108,7 @@ export const modificarMovieId = async (req: Request, res: Response) => {
         sinopis,
         titulo,
         mime_type: mimeTypeFinal,
-        foto: bufferFinal,
+        foto: bufferFinal as Uint8Array<ArrayBuffer>//cast
       },
     });
     res.status(200).json({ Mensaje: "Pelicula modificada con exito" });
@@ -134,7 +134,7 @@ export const crearMovie = async (req: Request, res: Response) => {
         sinopis:sinopsis,
         titulo,
         mime_type: archivo.mimetype,
-        foto: archivo.buffer,
+        foto: new Uint8Array(archivo.buffer)//trasforma al crear un nuevo objeto
       },
     });
     res.status(201).json({ Mensaje: "Pelicula registrada con exito" });

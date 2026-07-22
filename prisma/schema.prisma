@@ -30,3 +30,10 @@ model vehiculos {
   mime_type String? @db.VarChar(255)
   modelo    String  @db.VarChar(255)
 }
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model revoked_token {
+  id         Int      @id @default(autoincrement())
+  token      String   @db.VarChar
+  expires_at DateTime @db.Timestamp(6)
+}
